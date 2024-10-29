@@ -1,10 +1,11 @@
 import { Button, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";  // Import useLocation
+import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 
+
 export default function Header() {
-  const location = useLocation(); // Get current location object
+  const location = useLocation();
 
   // Function to check if the current path matches the link path
   const isActive = (path) => location.pathname === path;
@@ -22,23 +23,28 @@ export default function Header() {
       </Link>
 
       <div className="flex items-center gap-2 ml-auto">
+        {/* Search bar (only visible on large screens) */}
         <form className="hidden lg:inline">
           <TextInput
             type="text"
             placeholder="Search..."
             rightIcon={AiOutlineSearch}
             className="text-right"
+            aria-label="Search" // Adds accessibility label for search input
           />
         </form>
 
-        <Button className="w-12 h-10 lg:hidden" color="gray" pill>
+        {/* Mobile search button */}
+        <Button className="w-12 h-10 lg:hidden" color="gray" pill aria-label="Open search">
           <AiOutlineSearch />
         </Button>
 
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
+        {/* Dark mode toggle button (only visible on small screens and above) */}
+        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill aria-label="Toggle dark mode">
           <FaMoon />
         </Button>
 
+        {/* Sign In button */}
         <Link to="/sign-in">
           <Button className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-blue-600">
             Sign In
@@ -49,7 +55,7 @@ export default function Header() {
         <Navbar.Toggle />
       </div>
 
-      {/* Wrap the links inside Navbar.Collapse for toggling */}
+      {/* Collapsible navbar menu for links */}
       <Navbar.Collapse>
         <div className="flex flex-col lg:flex-row gap-4 ml-auto">
           <Link
@@ -81,4 +87,5 @@ export default function Header() {
     </Navbar>
   );
 }
+
 
