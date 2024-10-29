@@ -39,8 +39,7 @@ export default function SignUp() {
         navigate('/sign-in');
       }
       } catch (error) {
-      console.error("Error during sign-up:", error);
-      setErrorMessage("An unexpected error occurred. Please try again.");
+      setErrorMessage(errormessage);
       setLoading(false);
     }
   };
