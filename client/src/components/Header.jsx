@@ -1,14 +1,13 @@
-import { Button, Navbar, TextInput } from "flowbite-react";
+import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
-
+import { useSelector } from "react-redux";
 
 export default function Header() {
-  const location = useLocation();
-
-  // Function to check if the current path matches the link path
+  const location = useLocation().pathname;
   const isActive = (path) => location.pathname === path;
+  const {currentUser} = useSelector((state) => state.user);
 
   return (
     <Navbar className="border-b-2">
@@ -43,15 +42,45 @@ export default function Header() {
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill aria-label="Toggle dark mode">
           <FaMoon />
         </Button>
+        {currentUser ? (
+          <Dropdown
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar
+                 alt="user"
+                 img={currentUser.profilePicture}
+                 rounded 
+              />
+            }
+          >
+            <Dropdown.Header>
+                <span className="block test-sm">@{currentUser.username}</span>
+                <span className="block test-sm font-medium truncate">{currentUser.username}</span>
+            </Dropdown.Header>\
+            <Link to={'/dashboard?tab=profile'}>
+            <Dropdown.Item>profile</Dropdown.Item>
+            </Link>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign out</Dropdown.Item>
+         </Dropdown>
+          
+        ):
+        
+      
 
-        {/* Sign In button */}
-        <Link to="/sign-in">
-          <Button className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-blue-600">
-            Sign In
-          </Button>
-        </Link>
 
-        {/* Navbar toggle button for mobile view */}
+
+        (
+          <Link to="/sign-in">
+            <Button className="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-blue-600">
+              Sign In
+            </Button>
+          </Link>
+        )
+      }
+
+
         <Navbar.Toggle />
       </div>
 
